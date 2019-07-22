@@ -44,12 +44,6 @@ RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" > \
     apt-get install -y python-rosinstall && \
     rosdep init
 
-# Setup ROS
-USER $USER
-RUN rosdep fix-permissions && rosdep update
-RUN echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
-RUN /bin/bash -c "source ~/.bashrc"
-
 ### Install VScode
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
     sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/ && \
@@ -113,6 +107,12 @@ ADD ./src/common/xfce/ $HOME/
 RUN $INST_SCRIPTS/libnss_wrapper.sh
 ADD ./src/common/scripts $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
+
+# Setup ROS
+USER $USER
+RUN rosdep fix-permissions && rosdep update
+RUN echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
+RUN /bin/bash -c "source ~/.bashrc"
 
 # Expose Jupyter 
 EXPOSE 8888

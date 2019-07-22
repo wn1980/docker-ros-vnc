@@ -102,4 +102,5 @@ You should run with following environment variable in order to mapping host user
 
 ## Contributors
 
+* [henry2423/docker-ros-vnc](https://github.com/henry2423/docker-ros-vnc) - A docker environment with ROS, Gazebo, Xfce4 VNC Desktop and Tensorflow
 * [ConSol/docker-headless-vnc-container](https://github.com/ConSol/docker-headless-vnc-container) - developed the ConSol/docker-headless-vnc-container

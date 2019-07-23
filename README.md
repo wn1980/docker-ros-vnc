@@ -10,7 +10,7 @@
 * GPU version: CUDA 8.0 with cuDNN 6.0
 
 ## Usage
-- (If not aviable) Install Docker Engine
+- (If not available) Install Docker Engine
    ```
    curl -sSL https://get.docker.com/ | sh
    ```

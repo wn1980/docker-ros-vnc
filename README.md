@@ -1,34 +1,13 @@
+# Docker container images with ROS Kinetic (desktop-full) and noVNC web client
+
 #### Adapted from: [henry2423/docker-ros-vnc](https://github.com/henry2423/docker-ros-vnc) :clap:
+
 ## Features
 * Ubuntu 16.04
 * ROS Kinectic (desktop-full)
 * noVNC web client
 * IceWM desktop
 * GPU version: CUDA 8.0 with cuDNN 6.0
-
-# Docker container images with ROS, Gazebo, Xfce4 VNC Desktop and Tensorflow
-
-This repository developed from ConSol/docker-headless-vnc-container, with provide the headless VNC environments for docker container
-
-~~
-## Current Image Build:
-* `henry2423/ros-vnc-ubuntu:kinetic` : __Ubuntu 16.04 with `ROS Kinetic + Gazebo 8`__
-
-  [![](https://images.microbadger.com/badges/version/henry2423/ros-vnc-ubuntu:kinetic.svg)](https://hub.docker.com/r/henry2423/ros-vnc-ubuntu/) [![](https://images.microbadger.com/badges/image/henry2423/ros-vnc-ubuntu:kinetic.svg)](https://microbadger.com/images/henry2423/ros-vnc-ubuntu:kinetic)
-
-* `henry2423/ros-vnc-ubuntu:lunar` : __Ubuntu 16.04 with `ROS Lunar + Gazebo 9`__
-
-  [![](https://images.microbadger.com/badges/version/henry2423/ros-vnc-ubuntu:lunar.svg)](https://hub.docker.com/r/henry2423/ros-vnc-ubuntu/) [![](https://images.microbadger.com/badges/image/henry2423/ros-vnc-ubuntu:lunar.svg)](https://microbadger.com/images/henry2423/ros-vnc-ubuntu:lunar)
-
-* `henry2423/ros-vnc-ubuntu:melodic`: __Ubuntu 18.04 with `ROS Melodic + Gazebo 9`__
-
-  [![](https://images.microbadger.com/badges/version/henry2423/ros-vnc-ubuntu:melodic.svg)](https://hub.docker.com/r/henry2423/ros-vnc-ubuntu/) [![](https://images.microbadger.com/badges/image/henry2423/ros-vnc-ubuntu:melodic.svg)](https://microbadger.com/images/henry2423/ros-vnc-ubuntu:melodic)
-
-## Spec
-This is a Docker environmentalist equipped with ROS, Gazebo, xfce-vnc, no-vnc(http vnc service) and TensorFlow-gpu.
-The container is developed under xfce-docker-container source and add the ROS, TensorFlow GPU environment on top of it, to provide a essential kit for anyone who develop with robotic and deep learning.
-
-~~
 
 ## Usage
 - Run command with mapping to local port `5901` (vnc protocol) and `6901` (vnc web access):
@@ -113,7 +92,7 @@ You should run with following environment variable in order to mapping host user
 
       http://localhost:8888/
 
-## Contributors
+## Acknowledgments
 
 * [henry2423/docker-ros-vnc](https://github.com/henry2423/docker-ros-vnc) - A docker environment with ROS, Gazebo, Xfce4 VNC Desktop and Tensorflow
 * [ConSol/docker-headless-vnc-container](https://github.com/ConSol/docker-headless-vnc-container) - developed the ConSol/docker-headless-vnc-container

@@ -1,9 +1,16 @@
-### Adapted from: [henry2423/docker-ros-vnc](https://github.com/henry2423/docker-ros-vnc) 
+#### Adapted from: [henry2423/docker-ros-vnc](https://github.com/henry2423/docker-ros-vnc) :clap:
+## Features
+* Ubuntu 16.04
+* ROS Kinectic (desktop-full)
+* noVNC web client
+* IceWM desktop
+* GPU version: CUDA 8.0 with cuDNN 6.0
 
 # Docker container images with ROS, Gazebo, Xfce4 VNC Desktop and Tensorflow
 
 This repository developed from ConSol/docker-headless-vnc-container, with provide the headless VNC environments for docker container
 
+~~
 ## Current Image Build:
 * `henry2423/ros-vnc-ubuntu:kinetic` : __Ubuntu 16.04 with `ROS Kinetic + Gazebo 8`__
 
@@ -21,22 +28,26 @@ This repository developed from ConSol/docker-headless-vnc-container, with provid
 This is a Docker environmentalist equipped with ROS, Gazebo, xfce-vnc, no-vnc(http vnc service) and TensorFlow-gpu.
 The container is developed under xfce-docker-container source and add the ROS, TensorFlow GPU environment on top of it, to provide a essential kit for anyone who develop with robotic and deep learning.
 
+~~
+
 ## Usage
 - Run command with mapping to local port `5901` (vnc protocol) and `6901` (vnc web access):
 
-      docker run -d -p 5901:5901 -p 6901:6901 henry2423/ros-vnc-ubuntu:kinetic
+      docker run -d -p 5901:5901 -p 6901:6901 wn1980/ros-vnc:cpu
 
 - If you want to get into the container use interactive mode `-it` and `bash`
       
-      docker run -it -p 5901:5901 -p 6901:6901 henry2423/ros-vnc-ubuntu:kinetic bash
+      docker run -it -p 5901:5901 -p 6901:6901 wn1980/ros-vnc:cpu bash
 
 - If you want to connect to tensorboard, run command with mapping to local port `6006`:
       
-      docker run -it -p 5901:5901 -p 6901:6901 -p 6006:6006 henry2423/ros-vnc-ubuntu:kinetic
+      docker run -it -p 5901:5901 -p 6901:6901 -p 6006:6006 wn1980/ros-vnc:cpu
 
 - Build an image from scratch:
 
-      docker build -t henry2423/ros-vnc-ubuntu:kinetic .
+      docker build -t wn1980/ros-vnc:cpu -f Dockerfile.cpu .
+
+**Note** For GPU, please change `xxx:cpu` to `xxx:gpu` and replace the command `docker` with `nvidia-docker`.
 
 ## Connect & Control
 If the container runs up, you can connect to the container throught the following 

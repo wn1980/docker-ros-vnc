@@ -1,4 +1,4 @@
-FROM wn1980/ros-vnc:cpu-base
+FROM wn1980/docker-ros:cpu
 
 ARG p1080=1920x1080
 ARG p720=1280x720

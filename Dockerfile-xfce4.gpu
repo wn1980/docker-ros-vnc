@@ -2,6 +2,7 @@ FROM wn1980/docker-ros:gpu
 
 ARG p1080=1920x1080
 ARG p720=1280x720
+ARG p169=1600x900
 
 ### VNC Installation
 LABEL io.k8s.description="Headless VNC Container with Xfce window manager, firefox and chromium" \
@@ -22,12 +23,12 @@ EXPOSE $VNC_PORT $NO_VNC_PORT
 ENV VNCPASSWD=vncpassword
 ENV HOME=/home/$USER \
     TERM=xterm \
-    STARTUPDIR=/dockerstartup \
+    STARTUPDIR=/opt/dockerstartup \
     INST_SCRIPTS=/home/$USER/install \
     NO_VNC_HOME=/opt/noVNC \
     DEBIAN_FRONTEND=noninteractive \
     VNC_COL_DEPTH=24 \
-    VNC_RESOLUTION=$p720 \
+    VNC_RESOLUTION=$p169 \
     VNC_PW=$VNCPASSWD \
     VNC_VIEW_ONLY=false
 WORKDIR $HOME
@@ -71,5 +72,5 @@ EXPOSE 8888
 ### Switch to root user to install additional software
 USER $USER
 
-ENTRYPOINT ["/dockerstartup/vnc_startup.sh"]
+ENTRYPOINT ["/opt/dockerstartup/vnc_startup.sh"]
 CMD ["--wait"]

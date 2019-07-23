@@ -1,4 +1,7 @@
+# Docker container images with ROS Kinetic (desktop-full) and noVNC web client
+
 #### Adapted from: [henry2423/docker-ros-vnc](https://github.com/henry2423/docker-ros-vnc) :clap:
+
 ## Features
 * Ubuntu 16.04
 * ROS Kinectic (desktop-full)
@@ -6,31 +9,12 @@
 * IceWM desktop
 * GPU version: CUDA 8.0 with cuDNN 6.0
 
-# Docker container images with ROS, Gazebo, Xfce4 VNC Desktop and Tensorflow
-
-This repository developed from ConSol/docker-headless-vnc-container, with provide the headless VNC environments for docker container
-
-~~
-## Current Image Build:
-* `henry2423/ros-vnc-ubuntu:kinetic` : __Ubuntu 16.04 with `ROS Kinetic + Gazebo 8`__
-
-  [![](https://images.microbadger.com/badges/version/henry2423/ros-vnc-ubuntu:kinetic.svg)](https://hub.docker.com/r/henry2423/ros-vnc-ubuntu/) [![](https://images.microbadger.com/badges/image/henry2423/ros-vnc-ubuntu:kinetic.svg)](https://microbadger.com/images/henry2423/ros-vnc-ubuntu:kinetic)
-
-* `henry2423/ros-vnc-ubuntu:lunar` : __Ubuntu 16.04 with `ROS Lunar + Gazebo 9`__
-
-  [![](https://images.microbadger.com/badges/version/henry2423/ros-vnc-ubuntu:lunar.svg)](https://hub.docker.com/r/henry2423/ros-vnc-ubuntu/) [![](https://images.microbadger.com/badges/image/henry2423/ros-vnc-ubuntu:lunar.svg)](https://microbadger.com/images/henry2423/ros-vnc-ubuntu:lunar)
-
-* `henry2423/ros-vnc-ubuntu:melodic`: __Ubuntu 18.04 with `ROS Melodic + Gazebo 9`__
-
-  [![](https://images.microbadger.com/badges/version/henry2423/ros-vnc-ubuntu:melodic.svg)](https://hub.docker.com/r/henry2423/ros-vnc-ubuntu/) [![](https://images.microbadger.com/badges/image/henry2423/ros-vnc-ubuntu:melodic.svg)](https://microbadger.com/images/henry2423/ros-vnc-ubuntu:melodic)
-
-## Spec
-This is a Docker environmentalist equipped with ROS, Gazebo, xfce-vnc, no-vnc(http vnc service) and TensorFlow-gpu.
-The container is developed under xfce-docker-container source and add the ROS, TensorFlow GPU environment on top of it, to provide a essential kit for anyone who develop with robotic and deep learning.
-
-~~
-
 ## Usage
+- (If not available) Install Docker Engine
+   ```
+   curl -sSL https://get.docker.com/ | sh
+   ```
+
 - Run command with mapping to local port `5901` (vnc protocol) and `6901` (vnc web access):
 
       docker run -d -p 5901:5901 -p 6901:6901 wn1980/ros-vnc:cpu
@@ -62,12 +46,12 @@ If the container runs up, you can connect to the container throught the followin
 #### 1.1) Using root (user id `0`)
 Add the `--user` flag to your docker run command:
 
-    docker run -it --user root -p 5901:5901 henry2423/ros-vnc-ubuntu:kinetic
+    docker run -it --user root -p 5901:5901 wn1980/ros-vnc:cpu
 
 #### 1.2) Using user and group id of host system
 Add the `--user` flag to your docker run command (Note: uid and gui of host system may not able to map with container, which is 1000:1000. If that is the case, check with 3):
 
-    docker run -it -p 5901:5901 --user $(id -u):$(id -g) henry2423/ros-vnc-ubuntu:kinetic
+    docker run -it -p 5901:5901 --user $(id -u):$(id -g) wn1980/ros-vnc:cpu
 
 ### 2) Override VNC and Container environment variables
 The following VNC environment variables can be overwritten at the `docker run` phase to customize your desktop environment inside the container:
@@ -81,13 +65,13 @@ The following VNC environment variables can be overwritten at the `docker run` p
 Simply overwrite the value of the environment variable `VNC_PW`. For example in
 the docker run command:
 
-    docker run -it -p 5901:5901 -p 6901:6901 -e VNC_PW=vncpassword henry2423/ros-vnc-ubuntu:kinetic
+    docker run -it -p 5901:5901 -p 6901:6901 -e VNC_PW=vncpassword wn1980/ros-vnc:cpu
 
 #### 2.2) Example: Override the VNC resolution
 Simply overwrite the value of the environment variable `VNC_RESOLUTION`. For example in
 the docker run command:
 
-    docker run -it -p 5901:5901 -p 6901:6901 -e VNC_RESOLUTION=800x600 henry2423/ros-vnc-ubuntu:kinetic
+    docker run -it -p 5901:5901 -p 6901:6901 -e VNC_RESOLUTION=800x600 wn1980/ros-vnc:cpu
 
 ### 3) Mounting local directory to conatiner
 You should run with following environment variable in order to mapping host user/group with container, and retrieve R/W permission of mounting directory in container (Note: after running this command, the user account in container will be same as host account):
@@ -98,12 +82,12 @@ You should run with following environment variable in order to mapping host user
         --volume /etc/group:/etc/group \
         --volume /etc/shadow:/etc/shadow \
         --volume /home/ros/Desktop:/home/ros/Desktop:rw \
-        henry2423/ros-vnc-ubuntu:kinetic
+        wn1980/ros-vnc:cpu
 
 ### 4) Connecting jupyter notebook within container
 - Run command with mapping to local port `8888` (jupyter protocol) and `8888` (host web access):
 
-      docker run -d -p 8888:8888 henry2423/ros-vnc-ubuntu:kinetic
+      docker run -d -p 8888:8888 wn1980/ros-vnc:cpu
 
 - Check your local IP within container using `` $ifconfig``, then you can start up jupyter notebook in container with following command: 
 
@@ -113,7 +97,7 @@ You should run with following environment variable in order to mapping host user
 
       http://localhost:8888/
 
-## Contributors
+## Acknowledgments
 
 * [henry2423/docker-ros-vnc](https://github.com/henry2423/docker-ros-vnc) - A docker environment with ROS, Gazebo, Xfce4 VNC Desktop and Tensorflow
 * [ConSol/docker-headless-vnc-container](https://github.com/ConSol/docker-headless-vnc-container) - developed the ConSol/docker-headless-vnc-container

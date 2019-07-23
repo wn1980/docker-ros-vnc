@@ -1,49 +1,7 @@
-# This Dockerfile is used to build an ROS + VNC + Tensorflow image based on Ubuntu 16.04
-FROM osrf/ros:kinetic-desktop-full-xenial
+FROM wn1980/ros-vnc:cpu-base
 
-LABEL maintainer "Henry Huang"
-MAINTAINER Henry Huang "https://github.com/henry2423"
-ENV REFRESHED_AT 2018-10-29
-
-# Install sudo
-RUN apt-get update && \
-    apt-get install -y sudo \
-    xterm \
-    curl
-
-# Configure user
-ARG user=ros
-ARG passwd=ros
-ARG uid=1000
-ARG gid=1000
-ENV USER=$user
-ENV PASSWD=$passwd
-ENV UID=$uid
-ENV GID=$gid
-RUN groupadd $USER && \
-    useradd --create-home --no-log-init -g $USER $USER && \
-    usermod -aG sudo $USER && \
-    echo "$PASSWD:$PASSWD" | chpasswd && \
-    chsh -s /bin/bash $USER && \
-    # Replace 1000 with your user/group id
-    usermod  --uid $UID $USER && \
-    groupmod --gid $GID $USER
-
-### ROS and Gazebo Installation
-# Install other utilities
-RUN apt-get update && \
-    apt-get install -y vim \
-    tmux \
-    git
-
-### Install VScode
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
-    sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/ && \
-    sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-
-RUN sudo apt-get install -y apt-transport-https && \
-    sudo apt-get update && \
-    sudo apt-get install -y code
+ARG p1080=1920x1080
+ARG p720=1280x720
 
 ### VNC Installation
 LABEL io.k8s.description="Headless VNC Container with Xfce window manager, firefox and chromium" \
@@ -60,38 +18,41 @@ ENV DISPLAY=:1 \
     NO_VNC_PORT=6901
 EXPOSE $VNC_PORT $NO_VNC_PORT
 
-## Envrionment config
-ENV VNCPASSWD=vncpassword
+### Envrionment config
+ENV VNCPASSWD=vnc
 ENV HOME=/home/$USER \
     TERM=xterm \
     STARTUPDIR=/dockerstartup \
     INST_SCRIPTS=/home/$USER/install \
-    NO_VNC_HOME=/home/$USER/noVNC \
+    NO_VNC_HOME=/opt/noVNC \
     DEBIAN_FRONTEND=noninteractive \
     VNC_COL_DEPTH=24 \
-    VNC_RESOLUTION=1920x1080 \
+    VNC_RESOLUTION=$p720 \
     VNC_PW=$VNCPASSWD \
     VNC_VIEW_ONLY=false
 WORKDIR $HOME
 
-## Add all install scripts for further steps
+### Add all install scripts for further steps
 ADD ./src/common/install/ $INST_SCRIPTS/
 ADD ./src/ubuntu/install/ $INST_SCRIPTS/
 RUN find $INST_SCRIPTS -name '*.sh' -exec chmod a+x {} +
 
-## Install some common tools
+### Install some common tools
 RUN $INST_SCRIPTS/tools.sh
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
-## Install xvnc-server & noVNC - HTML5 based VNC viewer
+### Install custom fonts
+RUN $INST_SCRIPTS/install_custom_fonts.sh
+
+### Install xvnc-server & noVNC - HTML5 based VNC viewer
 RUN $INST_SCRIPTS/tigervnc.sh
 RUN $INST_SCRIPTS/no_vnc.sh
 
-## Install firefox and chrome browser
+### Install firefox and chrome browser
 RUN $INST_SCRIPTS/firefox.sh
 RUN $INST_SCRIPTS/chrome.sh
 
-## Install xfce UI
+### Install xfce UI
 RUN $INST_SCRIPTS/xfce_ui.sh
 ADD ./src/common/xfce/ $HOME/
 
@@ -100,11 +61,9 @@ RUN $INST_SCRIPTS/libnss_wrapper.sh
 ADD ./src/common/scripts $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
 
-# Setup ROS
-USER $USER
-RUN rosdep fix-permissions && rosdep update
-RUN echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
-RUN /bin/bash -c "source ~/.bashrc"
+## clean
+RUN apt-get autoremove -y && \
+	rm -rf $INST_SCRIPTS
 
 # Expose Jupyter 
 EXPOSE 8888

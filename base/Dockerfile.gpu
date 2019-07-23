@@ -1,15 +1,18 @@
 # This Dockerfile is used to build an ROS + VNC image based on Ubuntu 16.04
 FROM nvidia/cuda:8.0-cudnn6-devel-ubuntu16.04
 
-# Install sudo
+# Install sudo and other utilities
 RUN apt-get update && \
     apt-get install -y sudo \
     xterm \
-    curl
+    curl \
+    vim \
+    tmux \
+    git
 
 # Configure user
-ARG user=ros
-ARG passwd=ros
+ARG user=rosvnc
+ARG passwd=rosvnc
 ARG uid=1000
 ARG gid=1000
 ENV USER=$user
@@ -25,13 +28,6 @@ RUN groupadd $USER && \
     usermod  --uid $UID $USER && \
     groupmod --gid $GID $USER
 
-### ROS desktop-full Installation
-# Install other utilities
-RUN apt-get update && \
-    apt-get install -y vim \
-    tmux \
-    git
-
 # Install ROS
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" > \
                 /etc/apt/sources.list.d/ros-latest.list' && \
@@ -45,3 +41,14 @@ USER $USER
 RUN rosdep fix-permissions && rosdep update
 RUN echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
 RUN /bin/bash -c "source ~/.bashrc"
+
+### Install VScode
+USER root
+
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
+    sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/ && \
+    sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+
+RUN sudo apt-get install -y apt-transport-https && \
+    sudo apt-get update && \
+    sudo apt-get install -y code

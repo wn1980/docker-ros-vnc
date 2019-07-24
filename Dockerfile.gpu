@@ -28,7 +28,7 @@ ENV HOME=/home/$USER \
     NO_VNC_HOME=/opt/noVNC \
     DEBIAN_FRONTEND=noninteractive \
     VNC_COL_DEPTH=24 \
-    VNC_RESOLUTION=$p169 \
+    VNC_RESOLUTION=$p1080 \
     VNC_PW=$VNCPASSWD \
     VNC_VIEW_ONLY=false
 WORKDIR $HOME
@@ -50,7 +50,7 @@ RUN $INST_SCRIPTS/tigervnc.sh
 RUN $INST_SCRIPTS/no_vnc.sh
 
 ### Install firefox and chrome browser
-RUN $INST_SCRIPTS/firefox.sh
+#RUN $INST_SCRIPTS/firefox.sh
 RUN $INST_SCRIPTS/chrome.sh
 
 ### Install IceWM UI

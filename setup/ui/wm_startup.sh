@@ -9,8 +9,11 @@ xset -dpms &
 xset s noblank &
 xset s off &
 
-#/usr/bin/icewm-session > $HOME/wm.log &
-jwm > $HOME/wm.log &
+#setxkbmap -layout us,th -option "grp:lctrl_lshift_toggle,grep_led:scroll,compose:ralt"
+
+#/usr/bin/icewm-session > $STARTUPDIR/log/wm.log &
+/usr/bin/jwm-session > $STARTUPDIR/log/wm.log &
+#/usr/bin/tinywm-session > $STARTUPDIR/log/wm.log &
 
 sleep 1
-cat $HOME/wm.log
+cat $STARTUPDIR/log/wm.log

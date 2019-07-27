@@ -1,4 +1,4 @@
-FROM waipotn/docker-ros
+FROM waipotn/docker-ros:rpi
 
 ARG p1080=1920x1080
 ARG p720=1280x720

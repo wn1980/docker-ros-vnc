@@ -1,14 +1,14 @@
-FROM waipotn/docker-ros
+FROM wn1980/docker-ros
 
 ARG p1080=1920x1080
 ARG p720=1280x720
 ARG p169=1600x900
 
 ### VNC Installation
-LABEL io.k8s.description="Headless VNC Container with IceWM window manager, firefox and chromium" \
+LABEL io.k8s.description="Headless VNC Container" \
       io.k8s.display-name="Headless VNC Container based on Ubuntu" \
       io.openshift.expose-services="6901:http,5901:xvnc" \
-      io.openshift.tags="vnc, ubuntu, icewm" \
+      io.openshift.tags="vnc, ubuntu, ros" \
       io.openshift.non-scalable=true
 
 ## Connection ports for controlling the UI:
@@ -64,9 +64,9 @@ RUN $INST_SCRIPTS/chrome.sh
 ### Install UIs
 #RUN $INST_SCRIPTS/icewm_ui.sh
 RUN apt-get install -y \
-	icewm \
+#	icewm \
 	jwm \
-	twm \
+#	twm \
 	tinywm
 
 RUN apt-get purge -y pm-utils xscreensaver*
@@ -77,8 +77,7 @@ RUN apt-get install -y \
 	xfonts-thai \
 	geany \
 	pluma \
-	menu-l10n \
-	x11-apps
+	menu-l10n 
 	
 ## configure startup
 RUN $INST_SCRIPTS/libnss_wrapper.sh
@@ -86,7 +85,7 @@ RUN $INST_SCRIPTS/libnss_wrapper.sh
 COPY ./setup/ui/wm_startup.sh $STARTUPDIR/wm_startup.sh
 COPY ./setup/ui/wallpapers $STARTUPDIR/wallpapers
 #icewm ui
-COPY ./setup/ui/icewm $HOME/.icewm
+#COPY ./setup/ui/icewm $HOME/.icewm
 #jwm ui
 COPY ./setup/ui/jwm/system.jwmrc $HOME/.jwmrc
 COPY ./setup/ui/jwm/jwm-session /usr/bin/

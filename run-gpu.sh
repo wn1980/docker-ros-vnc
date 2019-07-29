@@ -11,11 +11,11 @@ docker rm -f $NAME
 docker run -d \
 	-p 5901:5901 \
 	-p 6901:6901 \
-	--privileged
+	--privileged \
 	--runtime=nvidia \
 	--ipc=host \
 	--volume="$PWD:$HOME" \
 	-e NVIDIA_VISIBLE_DEVICES=0 \
-	-e VNC_RESOLUTION=$p169 \
+	-e VNC_RESOLUTION=$p1080 \
 	--name $NAME \
 	wn1980/ros-vnc:gpu-rc

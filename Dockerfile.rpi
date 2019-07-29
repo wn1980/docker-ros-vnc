@@ -89,7 +89,7 @@ RUN apt-get install -y \
 ## configure startup
 RUN $INST_SCRIPTS/libnss_wrapper.sh
 
-COPY ./setup/ui/wm_startup.sh $STARTUPDIR/wm_startup.sh
+#COPY ./setup/ui/wm_startup.sh $STARTUPDIR/wm_startup.sh
 COPY ./setup/ui/wallpapers $STARTUPDIR/wallpapers
 #icewm ui
 #COPY ./setup/ui/icewm $HOME/.icewm

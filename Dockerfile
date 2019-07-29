@@ -1,4 +1,11 @@
+# arm64
 FROM waipotn/docker-ros
+# amd64
+#FROM wn1980/docker-ros
+# GPU
+#FROM wn1980/docker-ros:gpu
+# raspbian armhf
+#FROM wn1980/docker-ros:rpi
 
 ARG p1080=1920x1080
 ARG p720=1280x720
@@ -20,14 +27,14 @@ ENV DISPLAY=:1 \
 EXPOSE $VNC_PORT $NO_VNC_PORT
 
 ### Envrionment config
-ENV VNCPASSWD=vncpassword
+ENV VNCPASSWD=vnc123
 ENV HOME=/home/$USER \
     TERM=xterm \
     STARTUPDIR=/opt/docker_startup \
     INST_SCRIPTS=/home/$USER/install \
     NO_VNC_HOME=/opt/noVNC \
     DEBIAN_FRONTEND=noninteractive \
-    VNC_COL_DEPTH=24 \
+    VNC_COL_DEPTH=16 \
     VNC_RESOLUTION=$p720 \
     VNC_PW=$VNCPASSWD \
     VNC_VIEW_ONLY=false
@@ -43,6 +50,10 @@ RUN find $INST_SCRIPTS -name '*.sh' -exec chmod a+x {} +
 RUN $INST_SCRIPTS/tools.sh
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
+### Install chrome browser
+#RUN $INST_SCRIPTS/firefox.sh
+RUN $INST_SCRIPTS/chrome.sh
+
 ### Install VNC server
 #RUN $INST_SCRIPTS/tigervnc.sh
 RUN apt-get install -y tightvncserver
@@ -56,10 +67,6 @@ RUN wget -qO- https://github.com/novnc/noVNC/archive/v1.1.0.tar.gz | tar xz --st
 RUN wget -qO- https://github.com/novnc/websockify/archive/v0.8.0.tar.gz | tar xz --strip 1 -C $NO_VNC_HOME/utils/websockify
 RUN chmod +x -v $NO_VNC_HOME/utils/*.sh && \
 	ln -s $NO_VNC_HOME/vnc.html $NO_VNC_HOME/index.html
-
-### Install chrome browser
-#RUN $INST_SCRIPTS/firefox.sh
-RUN $INST_SCRIPTS/chrome.sh
 
 ### Install UIs
 #RUN $INST_SCRIPTS/icewm_ui.sh

@@ -17,5 +17,6 @@ docker run -d \
 	--volume="$PWD:$HOME" \
 	-e NVIDIA_VISIBLE_DEVICES=0 \
 	-e VNC_RESOLUTION=$p1080 \
+	-e VNC_COL_DEPTH=16 \
 	--name $NAME \
 	wn1980/ros-vnc:gpu-rc

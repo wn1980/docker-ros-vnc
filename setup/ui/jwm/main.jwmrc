@@ -38,7 +38,7 @@
 
         <TrayButton icon="/usr/share/jwm/jwm-red.svg">root:1</TrayButton>
         <Spacer width="2"/>
-        <TrayButton label="_">showdesktop</TrayButton>
+        <TrayButton label=">">showdesktop</TrayButton>
         <Spacer width="2"/>
 
         <Pager labeled="true"/>

@@ -12,8 +12,8 @@ xset s off &
 #setxkbmap -layout us,th -option "grp:lctrl_lshift_toggle,grep_led:scroll,compose:ralt"
 
 #/usr/bin/icewm-session > $STARTUPDIR/log/wm.log &
-/usr/bin/jwm-session > $STARTUPDIR/log/wm.log &
-#/usr/bin/tinywm-session > $STARTUPDIR/log/wm.log &
+#/usr/bin/jwm-session > $STARTUPDIR/log/wm.log &
+/usr/bin/tinywm-session > $STARTUPDIR/log/wm.log &
 
 sleep 1
 cat $STARTUPDIR/log/wm.log

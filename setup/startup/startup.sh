@@ -103,11 +103,11 @@ vncserver $DISPLAY -depth $VNC_COL_DEPTH -geometry $VNC_RESOLUTION &> $STARTUPDI
 echo -e "start window manager\n..."
 #$STARTUPDIR/wm_startup.sh &> $STARTUPDIR/log/wm_startup.log
 ### disable screensaver and power management
-xset -dpms &
-xset s noblank &
-xset s off &
+xset -dpms > $STARTUPDIR/log/wm.log &
+xset s noblank > $STARTUPDIR/log/wm.log &
+xset s off > $STARTUPDIR/log/wm.log &
 
-#setxkbmap -layout us,th -option "grp:lctrl_lshift_toggle,grep_led:scroll,compose:ralt"
+#setxkbmap -layout us,th -option "grp:lctrl_lshift_toggle,grep_led:scroll,compose:ralt" > $STARTUPDIR/log/wm.log
 
 #/usr/bin/icewm-session > $STARTUPDIR/log/wm.log &
 /usr/bin/jwm > $STARTUPDIR/log/wm.log &

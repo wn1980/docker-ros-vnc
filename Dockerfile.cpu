@@ -121,5 +121,5 @@ EXPOSE 8888
 ### Switch to root user to install additional software
 USER $USER
 
-ENTRYPOINT ["/opt/docker_startup/startup.sh"]
-CMD ["--wait", "--debug"]
+#ENTRYPOINT ["/opt/docker_startup/startup.sh"]
+#CMD ["--wait", "--debug"]

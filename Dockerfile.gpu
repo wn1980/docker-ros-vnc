@@ -69,7 +69,7 @@ RUN chmod +x -v $NO_VNC_HOME/utils/*.sh && \
 	ln -s $NO_VNC_HOME/vnc.html $NO_VNC_HOME/index.html
 
 ### Install UIs
-#RUN $INST_SCRIPTS/icewm_ui.sh
+RUN $INST_SCRIPTS/icewm_ui.sh
 RUN apt-get install -y \
 #	icewm \
 	jwm \
@@ -92,7 +92,7 @@ RUN $INST_SCRIPTS/libnss_wrapper.sh
 #COPY ./setup/ui/wm_startup.sh $STARTUPDIR/wm_startup.sh
 COPY ./setup/ui/wallpapers $STARTUPDIR/wallpapers
 #icewm ui
-#COPY ./setup/ui/icewm $HOME/.icewm
+COPY ./setup/ui/icewm $HOME/.icewm
 #jwm ui
 COPY ./setup/ui/jwm/ $HOME/.jwm
 RUN ln -s $HOME/.jwm/main.jwmrc $HOME/.jwmrc
